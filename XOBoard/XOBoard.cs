@@ -16,9 +16,9 @@ namespace XOBoard
         private int size;
         
 
-        public XOBoard()
+        public XOBoard(int size=3)
         {
-            
+            this.size = size;
             matrix = new string[,] {
                                      {"1","2","3"},
                                      {"4","5","6"},
@@ -26,11 +26,11 @@ namespace XOBoard
             p1_score = 0;
             p2_score = 0;
         }
-        public XOBoard(int size=3)
-        {
-            this.size = size;
-            matrix = new string[size, size];
-        }
+        //public XOBoard(int size=3)
+        //{
+        //    this.size = size;
+        //    matrix = new string[size, size];
+        //}
         public void put()
         {
           
@@ -38,14 +38,16 @@ namespace XOBoard
             Random rnd = new Random();
             if (rnd.Next() % 2 == 0) System.Console.WriteLine("Player 1 play first");
             else System.Console.WriteLine("Player 2 play fisrt");
-            for (int i = 0; i < size*size; i++)
+            for (int i = 0; i < size*size-1; i++)
             {
+                
                 do
                 {
                     x = Convert.ToInt32(Console.ReadLine());
-                    x--;
-                    row = x / size;
-                    col = size-1 - (x % size);
+                    
+                    row = --x / size;
+                    col =  (x % size);
+                    
                     if(matrix[row,col]=="X"|| matrix[row, col] == "O")
                     {
                         System.Console.WriteLine("This place{0}{1} isnt avalid",row,col);
@@ -55,7 +57,10 @@ namespace XOBoard
                 } while (matrix[row, col] == "X" || matrix[row, col] == "O");
                 if (i % 2 == 0) matrix[row, col] = "X".ToString();
                 else matrix[row, col] = "O".ToString();
+                Display();
+                
                 Status();
+
             }
             System.Console.WriteLine("Tie");
 
@@ -63,24 +68,14 @@ namespace XOBoard
 
         public void Status()
         {
-            int temp_row = 0;
-            int temp_col = 0;
-            int temp_cross = 0;
-
-            for(int i = 0; i < size-1; i++)
-            {
-                for(int j = 0; j < size-1; j++)
-                {
-                    if (matrix[i, j] == matrix[i, j + 1]) temp_row++;
-                    
-                }
-               
-                if (temp_row == size)
-                {
-                    System.Console.WriteLine("Player {0} win", matrix[i,0]);
-                    break;
-                }
-            }
+        if (matrix[0, 0] == matrix[0, 1] && matrix[0, 1] == matrix[0, 2]) System.Console.WriteLine("Player {0} win", matrix[0, 0]);
+        if (matrix[1, 0] == matrix[1, 1] && matrix[1, 1] == matrix[1, 2]) System.Console.WriteLine("Player {0} win", matrix[1, 0]);
+        if (matrix[2, 0] == matrix[2, 1] && matrix[2, 1] == matrix[2, 2]) System.Console.WriteLine("Player {0} win", matrix[2, 0]);
+        if (matrix[0, 0] == matrix[1, 0] && matrix[1, 0] == matrix[2, 0]) System.Console.WriteLine("Player {0} win", matrix[0, 0]);
+        if (matrix[0, 1] == matrix[1, 1] && matrix[0, 1] == matrix[2, 1]) System.Console.WriteLine("Player {0} win", matrix[0, 1]);
+        if (matrix[0, 2] == matrix[1, 2] && matrix[1, 2] == matrix[2, 2]) System.Console.WriteLine("Player {0} win", matrix[0, 2]);
+        if (matrix[0, 0] == matrix[1, 1] && matrix[1, 1] == matrix[2, 2]) System.Console.WriteLine("Player {0} win", matrix[0, 0]);
+        if (matrix[0, 2] == matrix[1, 1] && matrix[1, 1] == matrix[2, 0]) System.Console.WriteLine("Player {0} win", matrix[0, 2]);
 
 
         }
@@ -95,7 +90,7 @@ namespace XOBoard
                 }
                 System.Console.Write("\n");
             }
-            System.Console.ReadLine();
+            
         }
 
     }
