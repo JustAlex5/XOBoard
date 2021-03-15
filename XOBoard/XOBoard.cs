@@ -19,10 +19,14 @@ namespace XOBoard
         public XOBoard(int size=3)
         {
             this.size = size;
-            matrix = new string[,] {
+            if (size == 3)
+            {
+                matrix = new string[,] {
                                      {"1","2","3"},
                                      {"4","5","6"},
                                      {"7","8","9"}};
+            }
+            else matrix = createMatrix();
             p1_score = 0;
             p2_score = 0;
         }
@@ -50,7 +54,7 @@ namespace XOBoard
                     
                     if(matrix[row,col]=="X"|| matrix[row, col] == "O")
                     {
-                        System.Console.WriteLine("This place{0}{1} isnt avalid",row,col);
+                        System.Console.WriteLine("This place {0},{1} isnt avalid",row,col);
                     }
 
 
@@ -82,9 +86,9 @@ namespace XOBoard
 
         public void Display()
         {
-            for(int i = 0; i < 3; i++)
+            for(int i = 0; i < size; i++)
             {
-                for (int j = 0; j < 3; j++)
+                for (int j = 0; j < size; j++)
                 {
                     System.Console.Write(matrix[i, j]);
                 }
@@ -92,6 +96,23 @@ namespace XOBoard
             }
             
         }
+
+        private String[,] createMatrix()
+        {
+            matrix = new string[size,size];
+            int temp;
+            for(int i = 0; i < size;i++)
+            {
+                for (int j = 0; j < size; j++)
+                {
+                    temp = i * size + j % size+1;
+                    matrix[i, j] = temp.ToString();
+                }
+            }
+            return matrix;
+        }
+            
+        
 
     }
    
