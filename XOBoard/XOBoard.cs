@@ -42,6 +42,8 @@ namespace XOBoard
             Random rnd = new Random();
             if (rnd.Next() % 2 == 0) System.Console.WriteLine("Player 1 play first");
             else System.Console.WriteLine("Player 2 play fisrt");
+            System.Console.WriteLine("\n");
+            Display();
             for (int i = 0; i < size*size-1; i++)
             {
                 
@@ -73,22 +75,44 @@ namespace XOBoard
 
         public void Status()
         {
-            int count=1;
+            int count_row=1;
+            int count_col = 1;
+            int count_maindiag = 1;
+            int count_antidiag = 1;
             for (int i = 0; i < size-1; i++){
                 for (int j = 0; j < size-1; j++)
                 {
-                    if (matrix[i, j] == matrix[i, j + 1]) count++;
+                    if (matrix[i, j] == matrix[i, j + 1]) count_row++;
                 }
-                if (count == size)
+                if (count_row == size)
                 {
                     System.Console.WriteLine("Player {0} win", matrix[i, 0]);
                     break;
                 }
-                else count = 0;
+                else count_row = 1;
             }
 
-            
+            for (int j = 0; j < size - 1; j++)
+            {
+                for (int i = 0; i < size - 1; i++)
+                {
+                    if (matrix[i, j] == matrix[i+1, j]) count_col++;
+                }
+                if (count_col == size)
+                {
+                    System.Console.WriteLine("Player {0} win", matrix[0, j]);
+                    break;
+                }
+                else count_col = 1;
+            }
 
+            for (int i = 0; i < size - 1; i++)
+            {
+                if (matrix[i, i] == matrix[i + 1, i + 1]) count_maindiag++;
+                if (matrix[size-i-1, i] == matrix[size-1-i-1  , i + 1]) count_antidiag++;
+            }
+            if (count_maindiag == size) System.Console.WriteLine("Player {0} win", matrix[0, 0]);
+            if (count_antidiag == size) System.Console.WriteLine("Player {0} win", matrix[size-1, 0]);
         }
 
         public void Display()
