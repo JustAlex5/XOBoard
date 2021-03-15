@@ -9,7 +9,7 @@
             //g1.Display();
 
             XOBoard g2 = new XOBoard(5);
-            //g2.put();
+            g2.put();
         }
 
 

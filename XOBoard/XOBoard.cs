@@ -64,6 +64,7 @@ namespace XOBoard
                 Display();
                 
                 Status();
+                
 
             }
             System.Console.WriteLine("Tie");
@@ -72,15 +73,21 @@ namespace XOBoard
 
         public void Status()
         {
-        if (matrix[0, 0] == matrix[0, 1] && matrix[0, 1] == matrix[0, 2]) System.Console.WriteLine("Player {0} win", matrix[0, 0]);
-        if (matrix[1, 0] == matrix[1, 1] && matrix[1, 1] == matrix[1, 2]) System.Console.WriteLine("Player {0} win", matrix[1, 0]);
-        if (matrix[2, 0] == matrix[2, 1] && matrix[2, 1] == matrix[2, 2]) System.Console.WriteLine("Player {0} win", matrix[2, 0]);
-        if (matrix[0, 0] == matrix[1, 0] && matrix[1, 0] == matrix[2, 0]) System.Console.WriteLine("Player {0} win", matrix[0, 0]);
-        if (matrix[0, 1] == matrix[1, 1] && matrix[0, 1] == matrix[2, 1]) System.Console.WriteLine("Player {0} win", matrix[0, 1]);
-        if (matrix[0, 2] == matrix[1, 2] && matrix[1, 2] == matrix[2, 2]) System.Console.WriteLine("Player {0} win", matrix[0, 2]);
-        if (matrix[0, 0] == matrix[1, 1] && matrix[1, 1] == matrix[2, 2]) System.Console.WriteLine("Player {0} win", matrix[0, 0]);
-        if (matrix[0, 2] == matrix[1, 1] && matrix[1, 1] == matrix[2, 0]) System.Console.WriteLine("Player {0} win", matrix[0, 2]);
+            int count=1;
+            for (int i = 0; i < size-1; i++){
+                for (int j = 0; j < size-1; j++)
+                {
+                    if (matrix[i, j] == matrix[i, j + 1]) count++;
+                }
+                if (count == size)
+                {
+                    System.Console.WriteLine("Player {0} win", matrix[i, 0]);
+                    break;
+                }
+                else count = 0;
+            }
 
+            
 
         }
 
@@ -90,11 +97,15 @@ namespace XOBoard
             {
                 for (int j = 0; j < size; j++)
                 {
-                    System.Console.Write(matrix[i, j]);
+                    if ((i * size + j % size + 1 < 10) && matrix[i, j] != "X" && matrix[i, j]!= "O") System.Console.Write("| " +"0"+ matrix[i, j] + "  ");
+                   else System.Console.Write("| "+matrix[i, j]+"  ");
                 }
+                System.Console.Write("|\n");
                 System.Console.Write("\n");
+                
             }
-            
+           
+
         }
 
         private String[,] createMatrix()
