@@ -37,14 +37,14 @@ namespace XOBoard
         //}
         public void put()
         {
-          
+            Boolean status;
             int x;
             Random rnd = new Random();
             if (rnd.Next() % 2 == 0) System.Console.WriteLine("Player 1 play first");
             else System.Console.WriteLine("Player 2 play fisrt");
             System.Console.WriteLine("\n");
             Display();
-            for (int i = 0; i < size*size-1; i++)
+            for (int i = 0; i < size*size; i++)
             {
                 
                 do
@@ -64,16 +64,24 @@ namespace XOBoard
                 if (i % 2 == 0) matrix[row, col] = "X".ToString();
                 else matrix[row, col] = "O".ToString();
                 Display();
-                
-                Status();
+
+                if (Status())
+                {
+                    System.Console.WriteLine("press any key ");
+                    System.Console.ReadKey();
+                    break;
+                }
                 
 
             }
             System.Console.WriteLine("Tie");
 
+            System.Console.WriteLine("press any key ");
+            System.Console.ReadKey();
+
         }
 
-        public void Status()
+        public Boolean Status()
         {
             int count_row=1;
             int count_col = 1;
@@ -87,7 +95,7 @@ namespace XOBoard
                 if (count_row == size)
                 {
                     System.Console.WriteLine("Player {0} win", matrix[i, 0]);
-                    break;
+                    return true;
                 }
                 else count_row = 1;
             }
@@ -101,7 +109,7 @@ namespace XOBoard
                 if (count_col == size)
                 {
                     System.Console.WriteLine("Player {0} win", matrix[0, j]);
-                    break;
+                    return true;
                 }
                 else count_col = 1;
             }
@@ -111,8 +119,17 @@ namespace XOBoard
                 if (matrix[i, i] == matrix[i + 1, i + 1]) count_maindiag++;
                 if (matrix[size-i-1, i] == matrix[size-1-i-1  , i + 1]) count_antidiag++;
             }
-            if (count_maindiag == size) System.Console.WriteLine("Player {0} win", matrix[0, 0]);
-            if (count_antidiag == size) System.Console.WriteLine("Player {0} win", matrix[size-1, 0]);
+            if (count_maindiag == size)
+            {
+                System.Console.WriteLine("Player {0} win", matrix[0, 0]);
+                return true;
+            }
+            if (count_antidiag == size)
+            {
+                System.Console.WriteLine("Player {0} win", matrix[size - 1, 0]);
+                return true;
+            }
+            return false;
         }
 
         public void Display()
